@@ -202,6 +202,7 @@ float newton_sq(float number)
 	y  = * ( float * ) &i;
 	y  = y * ( threehalfs - ( x2 * y * y ) );   // 1st iteration 
 //      y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed
+	return 1.0f/y;
 }
 
 int main(int argc, const char * argv[]) {
