@@ -177,7 +177,7 @@ int KMP_match(char _main_string[], char _sub_string_[], const int _main_length_,
     return 9;
 }
 
-//牛顿迭代法开方
+//牛顿迭代法开方，这是一个不好的方式，某些情况下对迭代次数有要求
 long double _newton_iterative_func_(long double a)
 {
     long double x = a + 0.00001L;
@@ -186,6 +186,22 @@ long double _newton_iterative_func_(long double a)
         x = 0.5L * (x + (a/x) );
     }
     return x;
+}
+
+//牛顿迭代法的一种神奇的实现，卡马克利用了计算机对浮点数的操作方式
+float newton_sq(float number)
+{
+    long i;
+	float x2, y;
+	const float threehalfs = 1.5F;
+
+	x2 = number * 0.5F;
+	y  = number;
+	i  = * ( long * ) &y;                       // evil floating point bit level hacking（对浮点数的邪恶位元hack）
+	i  = 0x5f3759df - ( i >> 1 );               // what the fuck?
+	y  = * ( float * ) &i;
+	y  = y * ( threehalfs - ( x2 * y * y ) );   // 1st iteration 
+//      y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed
 }
 
 int main(int argc, const char * argv[]) {
